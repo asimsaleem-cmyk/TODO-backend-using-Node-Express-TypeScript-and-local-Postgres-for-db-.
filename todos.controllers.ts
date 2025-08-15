@@ -4,6 +4,7 @@ import {
   createTodo,
   updateTodo,
   deleteTodo,
+  markTodoDone,
 } from "./todos.services";
 
 export async function fetchTodos(req: Request, res: Response) {
@@ -47,5 +48,18 @@ export async function removeTodo(req: Request, res: Response) {
     res.json(deletedTodo);
   } catch (error) {
     res.status(500).json({ error: "Failed to delete todo" });
+  }
+}
+export async function markTodoAsDone(req: Request, res: Response) {
+  try {
+    const id = Number(req.params.id);
+    console.log("Mark as done request:", id);
+    const updatedTodo = await markTodoDone(id);
+
+    if (!updatedTodo) return res.status(404).json({ error: "Todo not found" });
+
+    res.json(updatedTodo);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to mark todo as done" });
   }
 }
