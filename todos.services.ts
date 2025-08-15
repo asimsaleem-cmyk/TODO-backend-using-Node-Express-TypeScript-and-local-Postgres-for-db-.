@@ -28,7 +28,7 @@ export async function deleteTodo(id: number) {
 }
 export async function markTodoDone(id: number) {
   const result = await pool.query(
-    "UPDATE todos SET done = NOT done WHERE id = $1 RETURNING *",
+    "UPDATE todos SET done = TRUE WHERE id = $1 RETURNING *",
     [id]
   );
   return result.rows[0];
